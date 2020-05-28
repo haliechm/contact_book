@@ -21,6 +21,7 @@ Examples of different features of the contact book
 **Start Menu**
 
 Contact book includes functionality such as adding/removing contact, adding random contacts, searching a contact, deleting all contacts, etc
+
 ![](Images/contact_menu.png)
 
 
