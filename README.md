@@ -28,4 +28,4 @@ Contact book includes functionality such as adding/removing contact, adding rand
 **Contact Book**
 Shows view of some of the contacts in the contact book. These contacts were each made using the random name generator
 
-![](Images/contact_book.png)
+![](Images/contactbook.png)

@@ -3,6 +3,8 @@ import pickle
 import contact
 import names
 
+from random import randint
+
 def contact_file():
 	print("CONTACT BOOK\n")
 
@@ -119,8 +121,8 @@ def contact_file():
 		for i in range(user_input):
 			rand_f_name = names.get_first_name()
 			rand_l_name = names.get_last_name()
-			rand_p_number = 4448889999
-			rand_birthday = "00/11/2222"
+			rand_p_number = "({}){}-{}".format(randint(100,999), randint(100,999), randint(1000,9999))
+			rand_birthday = "{}/{}/{}".format(randint(1,13), randint(1,31), randint(1900,2021))
 			new_contact = contact.Contact(rand_f_name, rand_l_name, rand_p_number, rand_birthday, "NA")
 			contact_list.append(new_contact)
 		pickle.dump(contact_list, outfile)
