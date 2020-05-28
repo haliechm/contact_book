@@ -8,4 +8,5 @@ class Contact():
 		self.birthday = birthday
 		self.address = address
 
-
+	def get_first_name():
+		return self.first_name

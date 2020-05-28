@@ -54,7 +54,7 @@ def contact_file():
 
 		first_name = input("Enter contact's first name\n")
 		last_name = input("Enter contact's last name\n")
-		phone_number = input("Enter contact's phone number\n")
+		phone_number = input("Enter contact's phone number in form of (XXX)XXX-XXXX\n")
 		birthday = input("Enter contact's birthday in from off XX/XX/XXX\n")
 		address = input("Enter user's address\n")
 
@@ -113,7 +113,55 @@ def contact_file():
 			contact_file()
 	elif(user_input == "5"):
 		os.system("clear")
-		print("SEARCH FOR CONACT\n")
+		print("SEARCH FOR CONACT")
+		print("Would you like to search for name by first name, last name, phone number, DOB, or address?\n")
+
+		lil_menu = {}
+		lil_menu["1"] = "First Name"
+		lil_menu["2"] = "Last Name"
+		lil_menu["3"] = "Phone Number"
+		lil_menu["4"] = "Date of Birth"
+		lil_menu["5"] = "Address"
+		lil_menu["6"] = "Exit"
+
+		for k,v in lil_menu.items():	
+			print("{} {}".format(k, v))
+
+		infile = open(file_name, "rb")
+		contact_list = pickle.load(infile)                
+		infile.close()
+		user_input = input()
+		matching_list = []
+		matching_contacts = []
+
+		if(user_input == "1"):
+			# returns a list
+			matching_contacts = sift_through(matching_list, contact_list, "first_name", input("Enter first name:\t"))
+		elif(user_input == "2"):
+			matching_contacts = sift_through(matching_list, contact_list, "last_name", input("Enter last name:\t"))
+		elif(user_input == "3"):
+			matching_contacts = sift_through(matching_list, contact_list, "phone_number", input("Enter phone number in form of (XXX)XXX-XXXX:\t"))
+		elif(user_input == "4"):
+			matching_contacts = sift_through(matching_list, contact_list, "birthday", input("Enter DOB in form of XX/XX/XXX:\t"))
+		elif(user_input == "5"):
+			matching_contacts = sift_through(matching_list, contact_list, "address", input("Enter address:\t"))
+		elif(user_input == "6"):
+			os.system("clear")
+			contact_file()
+
+		else:
+			os.system.clear()
+			print("ERROR 207: Invalid input\n")
+			contact_file()	
+		print("-------------------------------------------------------\n")
+		for cont in matching_contacts:
+			print("{} {} {} {} {}\n".format(cont.first_name, cont.last_name, cont.phone_number, cont.birthday, cont.address))
+
+		user_input = input("\nEnter any key to exit\n")
+		os.system("clear")
+		contact_file()
+		
+		
 
 	elif(user_input == "6"):
 		os.system("clear")
@@ -175,4 +223,22 @@ def contact_file():
 		print(">>>>>ERROR 001: Invalid Input\n")
 		contact_file()
 
+def sift_through(matching_list, contact_list, key_word, search_word):
+	for cont in contact_list:
 
+		if(key_word == "first_name"):
+			if cont.first_name == search_word:
+				matching_list.append(cont)
+		elif(key_word == "last_name"):
+			if cont.last_name == search_word:
+				matching_list.append(cont)
+		elif(key_word == "phone_number"):
+			if cont.phone_number == search_word:
+				matching_list.append(cont)
+		elif(key_word == "birthday"):
+			if cont.birthday == search_word:
+				matching_list.append(cont)
+		elif(key_word == "address"):
+				matching_list.append(cont)
+
+	return matching_list
