@@ -75,11 +75,42 @@ def contact_file():
 		
 	elif(user_input == "3"):
 		os.system("clear")
-		print("ADD NEW CONTACT\n")
+		print("CHANGE CONTACT\n")
 	elif(user_input == "4"):
 		os.system("clear")
-		print("DELETE CONTACT\n")
+		print("DELETE CONTACT")
+		print("Choose contact to change or enter '_EXIT' to exit\n")
 
+		infile = open(file_name, "rb")
+		contact_list = pickle.load(infile)
+		infile.close()
+
+		i = 1
+		for cont in contact_list:
+			print("{}) {} {} {} {} {}".format(i, cont.first_name, cont.last_name, cont.phone_number, cont.birthday, cont.address))
+			i += 1
+		user_input = input()
+		try:
+
+			if int(user_input) >= 1 and int(user_input) <= len(contact_list):
+                                del contact_list[int(user_input)-1]
+
+                                outfile = open(file_name, "wb")
+                                pickle.dump(contact_list, outfile)
+                                outfile.close()
+
+                                os.system("clear")
+                                print(">>>>>Contact deleted\n")
+                                contact_file()
+			else:                
+                        	os.system("clear")
+                        	print(">>>>>ERROR 593: Invalid input\n")
+                        	contact_file()
+
+		except ValueError:
+			os.system("clear")
+			print("Action cancelled\n") if user_input == "_EXIT" else print("ERROR 309: Invalid input\n")
+			contact_file()
 	elif(user_input == "5"):
 		os.system("clear")
 		print("SEARCH FOR CONACT\n")
@@ -87,7 +118,6 @@ def contact_file():
 	elif(user_input == "6"):
 		os.system("clear")
 		print("DELETE ALL CONTACTS\n")
-		#add check that they are sure they want to delete all contacts
 		
 		print("Are you sure you want to delete all contacts? This cannot be undone.\n")
 		print("1) Yes\n")
@@ -98,6 +128,9 @@ def contact_file():
 			outfile = open(file_name, "wb")
 			pickle.dump([], outfile)
 			outfile.close()
+			os.system("clear")
+			print(">>>>>All contacts deleted\n")
+			contact_file()
 		elif user_input == "2":
 			os.system("clear")
 			print(">>>>>Action Cancelled\n")
@@ -105,7 +138,9 @@ def contact_file():
 		else:
 			os.system("clear")
 			print(">>>>>ERROR 492: Invalid Input\n")
-			contact_file()		
+			contact_file()
+
+					
 		
 	elif(user_input == "7"):
 		os.system("clear")
@@ -139,4 +174,5 @@ def contact_file():
 		os.system("clear")
 		print(">>>>>ERROR 001: Invalid Input\n")
 		contact_file()
+
 
