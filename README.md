@@ -1,7 +1,6 @@
 Contact Book [Python]
 ---------------------------
 
-**WIP**
 
 Simple method to store contacts (name, phone number, birthday, address). Includes random contact generator functionality in which the user 
 can select a number of random contacts to be added to the contact book. Used random name generator from: https://github.com/treyhunner/names
