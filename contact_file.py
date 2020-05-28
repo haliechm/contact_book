@@ -76,6 +76,60 @@ def contact_file():
 	elif(user_input == "3"):
 		os.system("clear")
 		print("CHANGE CONTACT\n")
+
+		infile = open(file_name, "rb")
+		contact_list = pickle.load(infile)
+		infile.close()
+
+
+		print("Choose contact to change or enter '_EXIT' to exit\n")
+		
+		i=1
+		for cont in contact_list:
+			print("{}) {} {} {} {} {}".format(i, cont.first_name, cont.last_name, cont.phone_number, cont.birthday, cont.address))
+			i += 1
+
+		user_input = input()
+
+
+		try:
+			if(int(user_input) >= 1 or int(user_input) <= len(contact_list)):
+				changing_contact = contact_list[int(user_input)-1]
+				os.system("clear")
+				print("Updating contact\n")
+				lil_menu = {}
+				lil_menu["1"] = "Update first name"
+				lil_menu["2"] = "Update last name"
+				lil_menu["3"] = "Update phone number"
+				lil_menu["4"] = "Update DOB"
+				lil_menu["5"] = "Update address"
+				lil_menu["6"] = "Cancel"
+				for k,v in lil_menu.items():
+					print("{}) {}".format(k, v))
+				user_input2 = input()
+				update_contact(changing_contact, user_input2) 
+			else:
+				os.system("clear")
+				print("ERROR 583: Invalid input\n")
+
+
+		except ValueError:
+			if(user_input == "_EXIT"):
+				os.system("clear")
+				print(">>>>>Cancelled action\n")
+				contact_file()
+			else:
+				os.system("clear")
+				print("ERROR 493: Invalid input\n")
+				contact_file()
+
+		outfile = open(file_name, "wb")
+		pickle.dump(contact_list, outfile)
+		outfile.close()
+
+		os.system("clear")
+		print(">>>>>Contact updated\n")
+		contact_file()
 	elif(user_input == "4"):
 		os.system("clear")
 		print("DELETE CONTACT")
@@ -87,7 +141,7 @@ def contact_file():
 
 		i = 1
 		for cont in contact_list:
-			print("{}) {} {} {} {} {}".format(i, cont.first_name, cont.last_name, cont.phone_number, cont.birthday, cont.address))
+			print("{} {} {} {} {} {}".format(i, cont.first_name, cont.last_name, cont.phone_number, cont.birthday, cont.address))
 			i += 1
 		user_input = input()
 		try:
@@ -242,3 +296,30 @@ def sift_through(matching_list, contact_list, key_word, search_word):
 				matching_list.append(cont)
 
 	return matching_list
+
+def update_contact(changing_contact, user_input2):
+	if (user_input2 == "1"):
+		new_name = input("Change first name to:\t")
+		changing_contact.first_name = new_name
+	elif(user_input2 == "2"):
+		new_name = input("Change last name to:\t")
+		changing_contact.last_name = new_name
+	elif(user_input2 == "3"):
+		new_number = input("Change phone number to (XXX)XXX-XXXX:\t")
+		changing_contact.phone_number = new_number
+	elif(user_input2 == "4"):
+		new_birthday = input("Change DOB to (XX/XX/XXXX):\t")
+		changing_contact.birthday = new_birthday
+	elif(user_input2 == "5"):
+		new_address = input("Change address to:\t")
+		changing_contact.address = new_address
+	elif(user_input2 == "6"):
+		os.system("clear")
+		contact_file()
+
+	else:
+		os.system("clear")
+		print(">>>>>ERROR 109: Invalid input")
+		contact_file() 
+
+	return
